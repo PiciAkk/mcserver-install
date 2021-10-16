@@ -25,3 +25,7 @@ python install.py -v 1.12.2 -s vanilla
 `-s`: minecraft server type (vanilla by default)
 
 `-h`: display help page
+
+## Using as library
+
+*coming soon...*
