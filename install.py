@@ -6,7 +6,7 @@ from progress.bar import Bar
 
 parser = argparse.ArgumentParser(description='Minecraft server installer')
 
-parser.add_argument("--servertype", "-s", dest='serverType', help="Type of the server, ex: spigot, sponge, spongeforge, bukkit, forge")
+parser.add_argument("--servertype", "-s", dest='serverType', help="Type of the server, ex: spigot, sponge, spongeforge, bukkit, forge, vanilla")
 parser.add_argument("--version", "-v", dest="minecraftVersion", help="Minecraft version of the server, ex: 1.12.2")
 args = parser.parse_args()
 
@@ -21,14 +21,17 @@ if args.minecraftVersion == None:
     minecraftVersion = json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["latest"]["release"]
 else:
     minecraftVersion = args.minecraftVersion
-
 if serverType == "vanilla":
     print(f"Installing vanilla minecraft server. Version: {minecraftVersion}")
-    bar = Bar('Downloading...', max=2)
-    url = f"https://s3.amazonaws.com/Minecraft.Download/versions/{minecraftVersion}/minecraft_server.{minecraftVersion}.jar"
+    bar = Bar('Downloading...', max=4)
+    for i in json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["versions"]:
+        if i["id"] == minecraftVersion:
+            minecraftVersionURL = i["url"]
     bar.next()
-    filename = url.rsplit('/', 1)[1]
-    open(filename, "wb").write(requests.get(url).content)
+    serverDownloadURL = json.loads(requests.get(minecraftVersionURL).text)["downloads"]["server"]["url"]
+    bar.next()
+    filename = serverDownloadURL.rsplit('/', 1)[1]
+    open(filename, "wb").write(requests.get(serverDownloadURL).content)
     bar.next()
     bar.finish()
     bar = Bar('Making directory...', max=1)
@@ -51,3 +54,4 @@ if serverType == "vanilla":
     os.system(f"cd server && java -jar {filename}")
     bar.next()
     bar.finish()
+    print("Server successfully installed. To start your server later, run java -jar server/server.jar")
