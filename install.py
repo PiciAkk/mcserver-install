@@ -10,18 +10,7 @@ parser.add_argument("--servertype", "-s", dest='serverType', help="Type of the s
 parser.add_argument("--version", "-v", dest="minecraftVersion", help="Minecraft version of the server, ex: 1.12.2")
 args = parser.parse_args()
 
-# default server type
-if args.serverType == None:
-    serverType = "vanilla"
-else:
-    serverType = args.serverType
-
-# default minecraft version
-if args.minecraftVersion == None:
-    minecraftVersion = json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["latest"]["release"]
-else:
-    minecraftVersion = args.minecraftVersion
-if serverType == "vanilla":
+def installVanilla(minecraftVersion):
     print(f"Installing vanilla minecraft server. Version: {minecraftVersion}")
     bar = Bar('Downloading...', max=4)
     for i in json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["versions"]:
@@ -55,3 +44,18 @@ if serverType == "vanilla":
     bar.next()
     bar.finish()
     print("Server successfully installed. To start your server later, run java -jar server/server.jar")
+
+# default server type
+if args.serverType == None:
+    serverType = "vanilla"
+else:
+    serverType = args.serverType
+
+# default minecraft version
+if args.minecraftVersion == None:
+    minecraftVersion = json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["latest"]["release"]
+else:
+    minecraftVersion = args.minecraftVersion
+    
+if serverType == "vanilla":
+    installVanilla(minecraftVersion)
