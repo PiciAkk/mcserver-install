@@ -10,6 +10,8 @@ parser.add_argument("--servertype", "-s", dest='serverType', help="Type of the s
 parser.add_argument("--version", "-v", dest="minecraftVersion", help="Minecraft version of the server, ex: 1.12.2")
 args = parser.parse_args()
 
+def getLatestVersion():
+    return json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["latest"]["release"]
 def installVanilla(minecraftVersion):
     print(f"Installing vanilla minecraft server. Version: {minecraftVersion}")
     bar = Bar('Downloading...', max=4)
@@ -56,6 +58,6 @@ if args.minecraftVersion == None:
     minecraftVersion = json.loads(requests.get("https://launchermeta.mojang.com/mc/game/version_manifest.json").text)["latest"]["release"]
 else:
     minecraftVersion = args.minecraftVersion
-    
+
 if serverType == "vanilla":
     installVanilla(minecraftVersion)
