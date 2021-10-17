@@ -1,0 +1,3 @@
+import install
+
+install.removeServer()

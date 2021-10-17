@@ -28,4 +28,14 @@ python install.py -v 1.12.2 -s vanilla
 
 ## Using as library
 
-*coming soon...*
+```python
+import install # import the install.py library
+
+install.getLatestVersion() # returns latest minecraft version
+
+install.installServer(servertype, serverversion)
+# servertype can be vanilla, bukkit, sponge, etc.
+# serverversion can be any minecraft version (that you can use in the launcher)
+
+install.removeServer() # remove the server directory
+```
