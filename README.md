@@ -14,10 +14,15 @@ git clone https://github.com/piciakk/mcserver-install
 cd mcserver-install
 ```
 3. Install Java (or OpenJDK), if you haven't already done that
-3. Run the installer
+4. Install the dependencies
+```bash
+pip install -r requirements.txt
+``` 
+5. Run the installer
 ```bash
 python install.py -v 1.12.2 -s vanilla
 ```
+
 *Arguments:*
 
 `-v`: minecraft server version to install (latest by default)
@@ -25,6 +30,12 @@ python install.py -v 1.12.2 -s vanilla
 `-s`: minecraft server type (vanilla by default)
 
 `-h`: display help page
+
+## Removing the server
+
+```bash
+python remove.py
+```
 
 ## Using as library
 

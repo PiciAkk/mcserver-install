@@ -44,6 +44,7 @@ def installServer(serverType, minecraftVersion):
         bar.next()
         bar.finish()
         print("Server successfully installed. To start your server later, run java -jar server/server.jar")
+
 def main():
     parser = argparse.ArgumentParser(description='Minecraft server installer')
 
@@ -62,8 +63,7 @@ def main():
     else:
         minecraftVersion = args.minecraftVersion
 
-    if serverType == "vanilla":
-        installServer("vanilla", minecraftVersion)
+    installServer(serverType, minecraftVersion)
 
 if __name__ == "__main__":
     main()
